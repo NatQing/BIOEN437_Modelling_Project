@@ -10,7 +10,9 @@ const ready = (async () => {
   try { await pyodide.loadPackage("seaborn"); } catch (e) { /* optional: only changes plot style */ }
   pyodide.FS.mkdirTree("/home/pyodide/app");
   for (const f of FILES) {
-    const src = await (await fetch(new URL(`../app/${f}.py`, self.location))).text();
+    const resp = await fetch(new URL(`../app/${f}.py`, self.location));
+    if (!resp.ok) throw new Error(`Could not load app/${f}.py (HTTP ${resp.status})`);
+    const src = await resp.text();
     pyodide.FS.writeFile(`/home/pyodide/app/${f}.py`, src);
   }
   pyodide.runPython("import sys; sys.path.insert(0, '/home/pyodide')");
