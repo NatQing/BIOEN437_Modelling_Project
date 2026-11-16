@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stochastic Simulation Platform</title>
+  <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+  <header>
+    <h1>Stochastic Simulation Platform</h1>
+    <span id="status">Loading Python…</span>
+  </header>
+  <main>
+    <section class="left">
+      <div class="row">
+        <select id="example" aria-label="Example models"></select>
+        <label class="file">Upload model<input id="upload" type="file" accept=".txt,.ant,.antimony,text/plain" hidden></label>
+      </div>
+      <textarea id="model" spellcheck="false" aria-label="Reaction model"></textarea>
+      <div id="error" role="alert" hidden></div>
+
+      <fieldset>
+        <legend>Options</legend>
+        <div class="grid">
+          <label>End time <input id="tend" type="number" min="0" step="any" value="10"></label>
+          <label>Seed (blank = random) <input id="seed" type="number" min="0" step="1" placeholder="random"></label>
+          <label>Runs N <input id="nruns" type="number" min="1" step="1" value="200"></label>
+          <label>Grid spacing <input id="dt" type="number" min="0" step="any" value="0.5"></label>
+        </div>
+        <div id="species-box"><span class="hint">Species to plot:</span> <span id="species"></span></div>
+        <label class="inline"><input id="overlay" type="checkbox"> Overlay individual runs</label>
+      </fieldset>
+
+      <div class="buttons">
+        <button id="run-once" disabled>Run once</button>
+        <button id="run-ens" disabled>Run ensemble</button>
+        <button id="dl-csv" disabled>Download CSV</button>
+        <button id="export" disabled>Export Antimony</button>
+        <button id="validate" disabled>Validation tests</button>
+      </div>
+    </section>
+
+    <section class="right">
+      <progress id="progress" value="0" max="100" hidden></progress>
+      <div id="info" class="hint"></div>
+      <div id="output"><p class="hint">Enter a model and press <b>Run once</b> or <b>Run ensemble</b>.</p></div>
+    </section>
+  </main>
+  <script type="module" src="static/app.js"></script>
+</body>
+</html>
